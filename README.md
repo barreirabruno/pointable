@@ -1,9 +1,15 @@
-# nodejs-template-2022
+# Pointable
 
 ## Description
-NodeJS webservice template. Built in June 2022.
+Poll service\
+Create and manage online polls via this service.\
+Part of Pointable - online poll manager.
 
 ## Features available
+- [ ] Create a poll
+- [ ] Add candidates to a poll
+- [ ] Publish a poll
+- [ ] Vote in a poll
 
 ## Built with
 - Typescript
