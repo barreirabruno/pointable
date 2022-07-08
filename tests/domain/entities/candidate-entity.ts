@@ -1,17 +1,4 @@
-type CandidateInput = {
-  pollId: number
-  name: string
-}
-
-class Candidate {
-  pollId: number
-  name: string
-
-  constructor (params: CandidateInput) {
-    this.pollId = params.pollId
-    this.name = params.name
-  }
-}
+import { Candidate } from '@/domain/entities'
 
 describe('Candidate Entity ', () => {
   let sut: Candidate
