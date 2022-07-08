@@ -1,17 +1,4 @@
-type VoteCandidateInput = {
-  pollId: number
-  candidateId: number
-}
-
-class VoteCandidade {
-  pollId: number
-  candidateId: number
-
-  constructor (params: VoteCandidateInput) {
-    this.pollId = params.pollId
-    this.candidateId = params.candidateId
-  }
-}
+import { VoteCandidade } from '@/domain/entities'
 
 describe('Vote Candidate entity', () => {
   let sut: VoteCandidade
