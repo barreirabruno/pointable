@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  poll-service-pointable:
+    build:
+      context: .
+    command: npm run start
+    volumes:
+      - .:/app/
+      - /app/node_modules
+    ports:
+      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+    depends_on:
+      poll-postgres-db:
+        condition: servservice_healthy
+    environment:
+        POSTGRES_HOST: poll-postgres-db
+  poll-postgres-db:
+    image: postgres:11.5
+    restart: always
+    container_name: poll-postgres-db
+    ports:
+      - 5432:5432
+    env_file:
+      - ./.env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
