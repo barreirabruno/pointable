@@ -1,25 +1,5 @@
-import { Poll } from '@/domain/entities'
-import { CreatePollInterface, CreatePollNamespace } from '@/domain/features/createPoll.interface'
-
-class PollDatabaseRepo {
-  private readonly pollList: Poll[] = []
-
-  add (newPoll: Poll): void {
-    this.pollList.push(newPoll)
-  }
-}
-
-class CreatePollService implements CreatePollInterface {
-  constructor (
-    private readonly pollDatabaseRepo: PollDatabaseRepo
-  ) {}
-
-  async execute (params: CreatePollNamespace.Input): Promise<CreatePollNamespace.Output> {
-    const newPoll = new Poll(params)
-    await this.pollDatabaseRepo.add(newPoll)
-    return newPoll
-  }
-}
+import { CreatePollService } from '@/data/services/index'
+import { PollDatabaseRepo } from '@/infra/database/repos/poll-db-repo'
 
 const fixedDate = new Date(Date.now())
 const paramsInput = {
