@@ -1,40 +1,6 @@
-import Controller from '@/application/controllers/controller'
-import { HttpResponse, success } from '@/application/helpers/http-helpers'
+import CreatePollController from '@/application/controllers/create-poll-controller'
 import { CreatePollService } from '@/data/services'
 import { PollDatabaseRepo } from '@/infra/database/repos/poll-db-repo'
-
-type CreatePollHttpRequest = {
-  title: string
-  type: number
-  published: number
-  createdAt: string
-  updatedAt: string
-  startsAt: string
-  endsAt: string
-  content: string
-}
-
-class CreatePollController extends Controller {
-  constructor (
-    private readonly createPollService: CreatePollService
-  ) {
-    super()
-  }
-
-  async perform (httpRequest: CreatePollHttpRequest): Promise<HttpResponse<any>> {
-    const createPoll = await this.createPollService.execute({
-      title: httpRequest.title,
-      type: httpRequest.type,
-      published: httpRequest.published,
-      createdAt: new Date(httpRequest.createdAt),
-      updatedAt: new Date(httpRequest.updatedAt),
-      startsAt: new Date(httpRequest.startsAt),
-      endsAt: new Date(httpRequest.endsAt),
-      content: httpRequest.content
-    })
-    return success(createPoll)
-  }
-}
 
 describe('Create Poll controller', () => {
   let pollDatabaseRepo: PollDatabaseRepo
@@ -76,6 +42,23 @@ describe('Create Poll controller', () => {
       startsAt: new Date(fakeParams.startsAt),
       endsAt: new Date(fakeParams.endsAt),
       content: fakeParams.content
+    })
+  })
+
+  it('should return 200 if perform method succeeds', async () => {
+    const request = await sut.perform(fakeParams)
+    expect(request).toEqual({
+      statusCode: 200,
+      data: {
+        title: fakeParams.title,
+        type: fakeParams.type,
+        published: fakeParams.published,
+        createdAt: new Date(fakeParams.createdAt),
+        updatedAt: new Date(fakeParams.updatedAt),
+        startsAt: new Date(fakeParams.startsAt),
+        endsAt: new Date(fakeParams.endsAt),
+        content: fakeParams.content
+      }
     })
   })
 })
