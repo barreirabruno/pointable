@@ -1,26 +1,5 @@
-import ServerError from '@/domain/errors/server-error.domain'
-
-type HttpResponse<T = any> = {
-  statusCode: number
-  body: T
-}
-
-const serverError = (error: Error): HttpResponse<Error> => ({
-  statusCode: 500,
-  body: new ServerError(error)
-})
-
-abstract class Controller {
-  abstract perform (httpRequest: any): Promise<HttpResponse>
-
-  async handle (httpRequest: any): Promise<HttpResponse> {
-    try {
-      return await this.perform(httpRequest)
-    } catch (error) {
-      return serverError(error as Error)
-    }
-  }
-}
+import Controller from '@/application/controllers/controller'
+import { HttpResponse } from '@/application/helpers/http-helpers'
 
 class ControllerStub extends Controller {
   result: HttpResponse = {
